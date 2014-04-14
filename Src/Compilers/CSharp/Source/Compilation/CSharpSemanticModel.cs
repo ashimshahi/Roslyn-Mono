@@ -3003,7 +3003,9 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                 case BoundKind.AwaitExpression:
                     var await = (BoundAwaitExpression)boundNode;
+#if !BOOTSTRAP
                     isDynamic = await.IsDynamic;
+#endif
                     // TODO:
                     goto default;
 

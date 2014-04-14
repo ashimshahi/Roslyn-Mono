@@ -224,7 +224,10 @@ namespace Microsoft.CodeAnalysis.CSharp
                         CompileNamespace(symbol);
                         return (object)null;
                     }
-                    catch (Exception e) if (CompilerFatalError.ReportUnlessCanceled(e))
+                    catch (Exception e)
+#if !BOOTSTRAP
+                    if (CompilerFatalError.ReportUnlessCanceled(e))
+#endif
                     {
                         throw ExceptionUtilities.Unreachable;
                     }
@@ -271,7 +274,10 @@ namespace Microsoft.CodeAnalysis.CSharp
                         CompileNamedType(symbol);
                         return (object)null;
                     }
-                    catch (Exception e) if (CompilerFatalError.Report(e))
+                    catch (Exception e)
+#if !BOOTSTRAP
+                    if (CompilerFatalError.Report(e))
+#endif
                     {
                         throw ExceptionUtilities.Unreachable;
                     }

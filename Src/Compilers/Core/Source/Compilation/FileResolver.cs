@@ -274,7 +274,10 @@ namespace Microsoft.CodeAnalysis
                 // Use FileShare.Delete to support files that are opened with DeleteOnClose option.
                 return new FileStream(fullPath, FileMode.Open, FileAccess.Read, FileShare.Read | FileShare.Delete);
             }
-            catch (Exception e) if (!(e is IOException))
+            catch (Exception e)
+#if !BOOTSTRAP
+             if (!(e is IOException))
+#endif
             {
                 throw new IOException(e.Message, e);
             }

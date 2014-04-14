@@ -21,7 +21,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// <summary>
         /// The default parse options.
         /// </summary>
-        public static readonly CSharpParseOptions Default = new CSharpParseOptions();
+        public static readonly CSharpParseOptions Default = new CSharpParseOptions(preprocessorSymbols: null);
 
         /// <summary>
         /// Gets the language version.

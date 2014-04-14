@@ -1,71 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) Microsoft Open Technologies, Inc.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information. -->
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ImportGroup Label="Settings">
-    <Import Project="..\..\..\Tools\Microsoft.CodeAnalysis.Toolset.Open\Targets\VSL.Settings.targets" />
-    <Import Project="..\..\..\packages\RoslynCompilers.0.6.0\build\RoslynCompilers.props" Condition="Exists('..\..\..\packages\RoslynCompilers.0.6.0\build\RoslynCompilers.props')" />
-  </ImportGroup>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
-    <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
-    <ProjectGuid>{B501A547-C911-4A05-AC6E-274A50DFF30E}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1EE8CAD3-55F9-4D91-96B2-084641DA9A6C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.CodeAnalysis.CSharp</RootNamespace>
     <AssemblyName>Microsoft.CodeAnalysis.CSharp</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <StyleCopEnabled>false</StyleCopEnabled>
-    <SolutionDir Condition="'$(SolutionDir)' == '' OR '$(SolutionDir)' == '*Undefined*'">..\..\..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <OutDir>..\..\..\..\Binaries\$(Configuration)\</OutDir>
-    <CSharpSyntaxGeneratorToolPath>..\..\..\..\Binaries\$(Configuration)\CSharpSyntaxGenerator.exe</CSharpSyntaxGeneratorToolPath>
-    <BoundTreeGeneratorToolPath>..\..\..\..\Binaries\$(Configuration)\BoundTreeGenerator.exe</BoundTreeGeneratorToolPath>
-    <CSharpErrorFactsGeneratorToolPath>..\..\..\..\Binaries\$(Configuration)\CSharpErrorFactsGenerator.exe</CSharpErrorFactsGeneratorToolPath>
+    <CscToolExe>rcsc</CscToolExe>
+    <CscToolPath>$(MSBuildProjectDirectory)\..\..\..\..\bootstrap</CscToolPath>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
-  <ItemGroup Label="Project References">
-    <ProjectReference Include="..\..\Core\Source\CodeAnalysis.csproj">
-      <Project>{1EE8CAD3-55F9-4D91-96B2-084641DA9A6C}</Project>
-      <Name>CodeAnalysis</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Tools\Source\CompilerGeneratorTools\Source\CSharpSyntaxGenerator\CSharpSyntaxGenerator.csproj">
-      <Project>{288089C5-8721-458E-BE3E-78990DAB5E2D}</Project>
-      <Name>CSharpSyntaxGenerator</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Tools\Source\CompilerGeneratorTools\Source\BoundTreeGenerator\CompilersBoundTreeGenerator.csproj">
-      <Project>{02459936-CD2C-4F61-B671-5C518F2A3DDC}</Project>
-      <Name>CompilersBoundTreeGenerator</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Tools\Source\CompilerGeneratorTools\Source\CSharpErrorFactsGenerator\CSharpErrorFactsGenerator.csproj">
-      <Project>{288089C5-8721-458E-BE3E-78990DAB5E2E}</Project>
-      <Name>CSharpErrorFactsGenerator</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG,COMPILERCORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <DefineConstants>COMPILERCORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
   <ItemGroup Label="File References">
     <Reference Include="System.Reflection.Metadata">
-      <HintPath>..\..\..\packages\Microsoft.Bcl.Metadata.1.0.9-alpha\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
+      <HintPath>..\..\..\References\MetadataReader\System.Reflection.Metadata.dll</HintPath>
     </Reference>
     <Reference Include="System.Collections.Immutable">
-      <HintPath>..\..\..\packages\Microsoft.Bcl.Immutable.1.1.20-beta\lib\portable-net45+win8\System.Collections.Immutable.dll</HintPath>
+      <HintPath>..\..\..\References\Immutable\System.Collections.Immutable.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' "></PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <PlatformTarget>ARM</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
-    <PlatformTarget>ARM</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup>
-    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -764,8 +734,8 @@
     <Compile Include="Syntax\MethodDeclarationSyntax.cs" />
     <Compile Include="Syntax\NamespaceDeclarationSyntax.cs" />
     <Compile Include="Syntax\NameSyntax.cs" />
-    <Compile Include="Syntax\ParameterListSyntax.cs" />
     <Compile Include="Syntax\ParameterSyntax.cs" />
+    <Compile Include="Syntax\ParameterListSyntax.cs" />
     <Compile Include="Syntax\QualifiedNameSyntax.cs" />
     <Compile Include="Syntax\SeparatedSyntaxListBuilder.cs" />
     <Compile Include="Syntax\SimpleNameSyntax.cs" />
@@ -808,6 +778,10 @@
     <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="Utilities\TypeSymbolExtensions.cs" />
     <Compile Include="Utilities\TypeUnification.cs" />
+    <Compile Include="BoundTree/BoundNodes.xml.Generated.cs" />
+    <Compile Include="Errors/ErrorFacts.Generated.cs" />
+    <Compile Include="Syntax/Syntax.xml.Generated.cs" />
+    <Compile Include="ivt.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Syntax\CSharpSyntaxTree.Dummy.cs" />
@@ -818,9 +792,6 @@
   </ItemGroup>
   <ItemGroup>
     <BoundTreeDefinition Include="BoundTree\BoundNodes.xml" />
-    <Compile Include="$(IntermediateOutputPath)BoundNodes.xml.Generated.cs" />
-    <Compile Include="$(IntermediateOutputPath)ErrorFacts.Generated.cs" />
-    <Compile Include="$(IntermediateOutputPath)Syntax.xml.Generated.cs" />
     <Compile Include="Errors\ErrorCode.cs" />
     <EmbeddedResource Include="CSharpResources.resx">
       <SubType>Designer</SubType>
@@ -831,32 +802,10 @@
     <SyntaxDefinition Include="Syntax\Syntax.xml" />
   </ItemGroup>
   <ItemGroup>
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.ExpressionCompiler" />
-    <InternalsVisibleTo Include="rcsc" />
-    <InternalsVisibleTo Include="rcsi" />
-    <InternalsVisibleTo Include="Roslyn.Scripting.CSharp" />
-    <InternalsVisibleTo Include="VBCSCompiler" />
-    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.CommandLine.UnitTests" />
-    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.Emit.UnitTests" />
-    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.EnC.UnitTests" />
-    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.ExpressionCompiler.UnitTests" />
-    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.Semantic.UnitTests" />
-    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.Symbol.UnitTests" />
-    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.Syntax.UnitTests" />
-    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.Test.Utilities" />
-    <InternalsVisibleToTest Include="Roslyn.Scripting.Common.UnitTests" />
-    <InternalsVisibleToTest Include="Roslyn.Scripting.CSharp.UnitTests" />
-    <InternalsVisibleToTest Include="Roslyn.Services.Editor.CSharp.UnitTests" />
+    <ProjectReference Include="..\..\Core\Source\CodeAnalysisRoslyn.csproj">
+      <Project>{3B1704B3-96BA-4834-AB6E-7D8078A9373A}</Project>
+      <Name>CodeAnalysisRoslyn</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ImportGroup Label="Targets">
-    <Import Project="..\..\..\Tools\Microsoft.CodeAnalysis.Toolset.Open\Targets\VSL.Imports.targets" />
-    <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-    <Import Project="..\..\..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets" Condition="Exists('..\..\..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets')" />
-  </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

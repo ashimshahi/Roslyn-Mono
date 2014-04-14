@@ -6249,7 +6249,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                 return true;
             }
 
-            bool? typedIdentifier = IsPossibleTypedIdentifierStart(this.CurrentToken, this.PeekToken(1), allowThisKeyword: false);
+            bool? typedIdentifier = IsPossibleTypedIdentifierStart(this.CurrentToken, this.PeekToken(1), false);
             if (typedIdentifier != null)
             {
                 return typedIdentifier.Value;
@@ -6519,7 +6519,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                 return false;
             }
 
-            bool? typedIdentifier = IsPossibleTypedIdentifierStart(nextToken, PeekToken(2), allowThisKeyword: true);
+            bool? typedIdentifier = IsPossibleTypedIdentifierStart(nextToken, PeekToken(2), true);
             if (typedIdentifier != null)
             {
                 // new Idf Idf

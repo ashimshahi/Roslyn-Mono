@@ -1331,7 +1331,10 @@ namespace Microsoft.CodeAnalysis
                     return true;
                 }
             }
-            catch (Exception e) if (e is UnsupportedSignatureContent || e is BadImageFormatException)
+            catch (Exception e)
+#if !BOOTSTRAP
+             if (e is UnsupportedSignatureContent || e is BadImageFormatException)
+#endif             
             {
                 positionalArgs = SpecializedCollections.EmptyArray<TypedConstant>();
                 namedArgs = SpecializedCollections.EmptyArray<KeyValuePair<String, TypedConstant>>();
@@ -1466,7 +1469,10 @@ namespace Microsoft.CodeAnalysis
                     throw new UnsupportedSignatureContent();
                 }
             }
-            catch (Exception e) if (e is UnsupportedSignatureContent || e is BadImageFormatException) 
+            catch (Exception e)
+#if !BOOTSTRAP
+             if (e is UnsupportedSignatureContent || e is BadImageFormatException) 
+#endif
             {
                 for (; paramIndex <= paramCount; paramIndex++)
                 {
